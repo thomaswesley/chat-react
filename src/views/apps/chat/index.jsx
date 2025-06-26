@@ -29,6 +29,8 @@ import CustomAvatar from '@core/components/mui/Avatar'
 import { useSettings } from '@core/hooks/useSettings'
 import { commonLayoutClasses } from '@layouts/utils/layoutClasses'
 import { apiPaganaPizzaria } from '@utils/api'
+import { io } from 'socket.io-client';
+import { v4 as uuidv4 } from 'uuid';
 
 const AvatarsIcon = () => {
   return (
@@ -38,50 +40,6 @@ const AvatarsIcon = () => {
       </CustomAvatar>
     </div>
   )
-}
-
-const chatStore = {
-  
-    "profileUser": {
-        "id": 1,
-        "avatar": <AvatarsIcon />,
-        "fullName": "Thomas",
-        "role": "Admin",
-        "about": "Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.",
-        "status": "online",
-        "settings": {
-            "isTwoStepAuthVerificationEnabled": true,
-            "isNotificationsOn": false
-        }
-    },
-    "contacts": [
-        {
-            "id": 3,
-            "fullName": "Scarlett Johansson",
-            "role": "Pagana Pizzaria",
-            "avatarColor": "primary",
-            "about": "Toffee caramels jelly-o tart gummi bears cake I love ice cream lollipop. Sweet liquorice croissant candy danish dessert icing. Cake macaroon gingerbread toffee sweet.",
-            "status": "busy",
-            "avatar": '/images/avatars/scarlett-johansson.png'
-        },
-    ],
-    "chats": [
-        {
-            "id": 1,
-            "userId": 3,
-            "unseenMsgs": 0,
-            "chat": []
-        },
-    ],
-    "activeUser": {
-        "id": 3,
-        "fullName": "Scarlett Johansson",
-        "role": "Pagana Pizzaria",
-        "avatarColor": "primary",
-        "about": "Toffee caramels jelly-o tart gummi bears cake I love ice cream lollipop. Sweet liquorice croissant candy danish dessert icing. Cake macaroon gingerbread toffee sweet.",
-        "status": "busy",
-        "avatar": '/images/avatars/scarlett-johansson.png'
-    }
 }
 
 // Emoji Picker Component for selecting emojis
@@ -184,6 +142,9 @@ const UserAvatar = ({ activeUser, setUserProfileLeftOpen, setBackdropOpen }) => 
 
 const ChatWrapper = () => {
 
+  const socket = io(process.env.NEXT_PUBLIC_APP_PAGANA_PIZZARIA_NODE);
+  const [messages, setMessages] = useState([])
+
   const [backdropOpen, setBackdropOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const messageInputRef = useRef(null)
@@ -191,8 +152,6 @@ const ChatWrapper = () => {
   const isBelowLgScreen = useMediaQuery(theme => theme.breakpoints.down('lg'))
   const isBelowMdScreen = useMediaQuery(theme => theme.breakpoints.down('md'))
   const isBelowSmScreen = useMediaQuery(theme => theme.breakpoints.down('sm'))
-
-  const { activeUser, profileUser, contacts } = chatStore
   const [userProfileRightOpen, setUserProfileRightOpen] = useState(false)
   const scrollRef = useRef(null)
   const [msg, setMsg] = useState('')
@@ -201,6 +160,52 @@ const ChatWrapper = () => {
 
   const anchorRef = useRef(null)
   const open = Boolean(anchorEl)
+
+  const chatStore = {
+  
+    "profileUser": {
+        "id": 1,
+        "avatar": <AvatarsIcon />,
+        "fullName": "Thomas",
+        "role": "Admin",
+        "about": "",
+        "status": "online",
+        "settings": {
+            "isTwoStepAuthVerificationEnabled": true,
+            "isNotificationsOn": false
+        }
+    },
+    "contacts": [
+        {
+            "id": 3,
+            "fullName": "Charlene",
+            "role": "Pagana Pizzaria",
+            "avatarColor": "primary",
+            "about": "",
+            "status": "busy",
+            "avatar": '/images/avatars/scarlett-johansson.png'
+        },
+    ],
+    "chats": [
+        {
+            "id": 1,
+            "userId": 3,
+            "unseenMsgs": 0,
+            "chat": messages
+        },
+    ],
+    "activeUser": {
+        "id": 3,
+        "fullName": "Charlene",
+        "role": "Pagana Pizzaria",
+        "avatarColor": "primary",
+        "about": "",
+        "status": "busy",
+        "avatar": '/images/avatars/scarlett-johansson.png'
+    }
+  }
+
+  const { activeUser, profileUser, contacts } = chatStore  
 
   const handleToggle = () => {
     setOpenEmojiPicker(prevOpen => !prevOpen)
@@ -212,6 +217,19 @@ const ChatWrapper = () => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  // Function to scroll to bottom when new message is sent
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      if (isBelowLgScreen) {
+        // @ts-ignore
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+      } else {
+        // @ts-ignore
+        scrollRef.current._container.scrollTop = scrollRef.current._container.scrollHeight
+      }
+    }
   }
 
   // Wrapper for the chat log to handle scrolling
@@ -233,10 +251,6 @@ const ChatWrapper = () => {
 
   const activeUserChat = chatStore.chats.find(chat => chat.userId === chatStore.activeUser?.id)
 
-  useEffect(() => {
-    console.log('chatStore', chatStore)
-  }, [chatStore])
-
   // Close user profile right drawer if backdrop is closed and user profile right drawer is open
   useEffect(() => {
     if (!backdropOpen && userProfileRightOpen) {
@@ -249,18 +263,35 @@ const ChatWrapper = () => {
 
     event.preventDefault()
 
-    console.log('mensagem', msg)
-
     if (msg.trim() == '') {
 
       setMsg('')
 
       return
     }
+    
+    const indiceArrayNewMessage = messages.length;
 
     const data = {
-      "content": msg
+      "content": msg,
+      "indiceArrayNewMessage": indiceArrayNewMessage
     }
+
+    const now = new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' });
+
+    const dataUser = {
+      'message': msg,
+      'time': now,
+      'senderId': 1,
+      'msgStatus': {
+        'isSent': true,
+        'isDelivered': false,
+        'isSeen': false,
+      }
+    }
+
+    setMessages((prev) => [...prev, dataUser]);
+    setMsg('')
     
     postMessages(data)
   }
@@ -299,36 +330,16 @@ const ChatWrapper = () => {
     }
   }
 
-  const getMessages = async () => {
-
-    try {
-
-      const data = await apiPaganaPizzaria.get('/messages').then(response => {
-
-        console.log('Resposta getMessages', response.data)
-
-        return response.data
-
-      }).catch(error => {
-      
-        console.log(error)
-      
-      }).finally(function () {
-      
-        // always executed      
-      });
-
-      return data
-
-    } catch (error) {
-
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
     getMessages()
   }, [])
+
+  useEffect(() => {
+    console.log('messages', messages)
+
+    scrollToBottom()
+
+  }, [chatStore])
 
   const handleInputEndAdornment = () => {
 
@@ -390,11 +401,25 @@ const ChatWrapper = () => {
           </>
         )}
         {isBelowSmScreen ? (
-          <CustomIconButton variant='contained' color='primary' type='submit'>
+          <CustomIconButton 
+            variant='contained' 
+            color='primary' 
+            type='submit' 
+            sx={{
+              borderRadius: '500px',
+          }}>
             <i className='ri-send-plane-line' />
           </CustomIconButton>
         ) : (
-          <Button variant='contained' color='primary' type='submit' endIcon={<i className='ri-send-plane-line' />}>
+          <Button
+            variant='contained'
+            color='primary'
+            type='submit'
+            endIcon={<i className='ri-send-plane-line' />}
+            sx={{
+              borderRadius: '500px',
+            }}
+          >
             Enviar
           </Button>
         )}
@@ -508,28 +533,28 @@ const ChatWrapper = () => {
                                 )}
                                 {index === activeUserChat.chat.length - 1 ? (
                                   <Typography variant='caption'>
-                                    {new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
+                                    {new Date().toLocaleString('pt-BR', { hour: 'numeric', minute: 'numeric', hour12: false })}
                                   </Typography>
                                 ) : msg.time ? (
                                   <Typography variant='caption'>
-                                    {new Date(msg.time).toLocaleString('en-US', {
+                                    {new Date(msg.time).toLocaleString('pt-BR', {
                                       hour: 'numeric',
                                       minute: 'numeric',
-                                      hour12: true
+                                      hour12: false
                                     })}
                                   </Typography>
                                 ) : null}
                               </div>
                             ) : index === activeUserChat.chat.length - 1 ? (
                               <Typography key={index} variant='caption'>
-                                {new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
+                                {new Date().toLocaleString('pt-BR', { hour: 'numeric', minute: 'numeric', hour12: false })}
                               </Typography>
                             ) : msg.time ? (
                               <Typography key={index} variant='caption'>
-                                {new Date(msg.time).toLocaleString('en-US', {
+                                {new Date(msg.time).toLocaleString('pt-BR', {
                                   hour: 'numeric',
                                   minute: 'numeric',
-                                  hour12: true
+                                  hour12: false
                                 })}
                               </Typography>
                             ) : null)
@@ -558,7 +583,7 @@ const ChatWrapper = () => {
                 '& fieldset': { border: '0' },
                 '& .MuiOutlinedInput-root': {
                   background: 'var(--mui-palette-background-paper)',
-                  borderRadius: 'var(--mui-shape-customBorderRadius-lg)',
+                  borderRadius: '500px',
                   boxShadow: 'var(--mui-customShadows-xs)'
                 }
               }}

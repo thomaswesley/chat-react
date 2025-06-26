@@ -1,34 +1,132 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 🍕 Charlene – Agente de Atendimento com IA para Pizzaria Pagana
 
-First, run the development server:
+[![Deploy Frontend](https://img.shields.io/badge/demo-online-brightgreen)](https://charlene-pizzaria.vercel.app)
+[![Backend](https://img.shields.io/badge/api-nodejs-blue)](https://github.com/thomaswesley/pagana-api-node)
+[![Frontend](https://img.shields.io/badge/frontend-react-61DAFB)](https://github.com/thomaswesley/pagana-react)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+Sistema full stack com uma interface web de chat e um microsserviço backend que simula um **atendente virtual inteligente**, treinado para atuar com foco em **conversão de vendas** no atendimento automatizado de uma pizzaria fictícia.
+
+➡️ **Acesse a demonstração**: [https://charlene-pizzaria.vercel.app](https://charlene-pizzaria.vercel.app)
+
+---
+
+## 🧠 Cenário
+
+Simulação de um atendimento humanizado com **IA generativa**, treinada com regras comportamentais específicas. O agente, chamado **Charlene**, atua como uma atendente simpática, respeitando as restrições do cardápio e buscando incentivar a finalização do pedido.
+
+---
+
+## 🎯 Objetivo
+
+- Simular um atendimento de pizzaria feito por IA.
+- Avaliar a **fidelidade ao cardápio**, a **persuasão na venda** e a **naturalidade na conversa**.
+- Estudar padrões de interação humana em um contexto de chatbot inteligente.
+
+---
+
+## 🧾 Regras de Comportamento da IA
+
+> Todas as respostas são geradas a partir de um `systemPrompt` com regras explícitas:
+
+### ✅ O que pode fazer
+- Oferecer apenas itens do cardápio: **pizzas**, **bebidas** e **sobremesas**.
+- Sugerir bebida se o cliente não pedir.
+- Sugerir sobremesa se o cliente aceitar bebida.
+- Insistir educadamente para concluir o pedido.
+- Usar linguagem simpática, persuasiva e natural.
+
+### ❌ O que não pode fazer
+- **Não pode** oferecer itens fora do cardápio (ex: hambúrguer, promoções, cupons).
+- **Não pode** sair do contexto de venda.
+
+---
+
+## 💬 Exemplo de Conversa Esperada
+
+```
+Cliente: Olá  
+IA (Charlene): Olá! Eu me chamo Charlene 😍. Bem-vindo(a) à Pagana Pizzaria, como posso ajudar você hoje?
+
+Cliente: Quais sabores vocês têm?  
+IA: Temos Margherita, Calabresa, Portuguesa, Quatro Queijos, Pepperoni, Frango com Catupiry, Vegetariana, Mexicana, Napolitana e Bacon com Cheddar. Posso te recomendar a Calabresa, que é uma das mais pedidas?
+
+Cliente: Quero uma pizza Portuguesa  
+IA: Ótima escolha! Deseja adicionar uma bebida gelada para acompanhar? Temos refrigerantes e sucos.
+
+Cliente: Quero uma Coca  
+IA: Perfeito! Para finalizar, posso te oferecer uma sobremesa? Nosso brownie com calda de chocolate é irresistível!
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📋 Cardápio
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 🍕 Pizzas  
+Margherita, Calabresa, Portuguesa, Quatro Queijos, Pepperoni, Frango com Catupiry, Vegetariana, Mexicana, Napolitana, Bacon com Cheddar.
 
-## Learn More
+### 🥤 Bebidas  
+Coca-Cola, Guaraná, Suco de Laranja, Suco de Uva, Suco de Abacaxi, Água Mineral, Água com Gás, Coca-Cola Zero, Guaraná Zero, Chá Gelado.
 
-To learn more about Next.js, take a look at the following resources:
+### 🍰 Sobremesas  
+Brownie com calda de chocolate, Pudim, Sorvete de Creme, Torta de Limão, Petit Gateau, Cheesecake, Mousse de Maracujá, Mousse de Chocolate, Pavê, Açaí na Tigela.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ⚙️ Arquitetura
 
-## Deploy on Vercel
+### 🔁 Backend – [pagana-api-node](https://github.com/thomaswesley/pagana-api-node)
+- Node.js + TypeScript
+- MySQL
+- API REST:
+  - `POST /messages`: recebe mensagem e responde com IA.
+  - `GET /messages`: retorna histórico.
+- Estrutura organizada (controllers, services, models, helpers).
+- Suporte a **WebSocket**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 💻 Frontend – [pagana-react](https://github.com/thomaswesley/pagana-react)
+- React + Vite
+- Axios + WebSocket
+- Interface de chat simples e funcional.
+- Mensagens do cliente e resposta em tempo real da IA.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 🚀 Como Executar Localmente
+
+### 1. Clone os repositórios:
+
+```bash
+# Backend
+git clone https://github.com/thomaswesley/pagana-api-node
+cd pagana-api-node
+npm install
+cp .env.example .env # configure o acesso ao MySQL
+npm run dev
+```
+
+```bash
+# Frontend
+git clone https://github.com/thomaswesley/pagana-react
+cd pagana-react
+npm install
+npm run dev
+```
+
+---
+
+## 📦 Tecnologias Utilizadas
+
+- **Frontend**: React, Vite, Axios, WebSocket
+- **Backend**: Node.js, TypeScript, Express, MySQL
+- **Outros**: Dotenv, ESLint, Prettier, Cors, Socket.io
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+Feito com ❤️ por [Thomas Wesley](https://github.com/thomaswesley)
