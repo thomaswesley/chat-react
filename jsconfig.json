@@ -59,7 +59,7 @@
     "tailwind.config.js",
     "**/*.js",
     "**/*.jsx"
-, "src/assets/iconify-icons/bundle-icons-css.cjs", "src/assets/iconify-icons/bundle-icons-css.cjs"  ],
+, "src/assets/iconify-icons/bundle-icons-css.js", "src/assets/iconify-icons/bundle-icons-css.js"  ],
   "exclude": [
     "node_modules"
   ]

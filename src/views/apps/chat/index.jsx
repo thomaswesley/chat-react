@@ -500,7 +500,7 @@ const ChatWrapper = () => {
             color='primary' 
             type='submit' 
             sx={{
-              borderRadius: '500px',
+              borderRadius: '999px',
           }}>
             <i className='ri-send-plane-line' />
           </CustomIconButton>
@@ -511,7 +511,7 @@ const ChatWrapper = () => {
             type='submit'
             endIcon={<i className='ri-send-plane-line' />}
             sx={{
-              borderRadius: '500px',
+              borderRadius: '999px',
             }}
           >
             Enviar
@@ -677,7 +677,7 @@ const ChatWrapper = () => {
                 '& fieldset': { border: '0' },
                 '& .MuiOutlinedInput-root': {
                   background: 'var(--mui-palette-background-paper)',
-                  borderRadius: '500px',
+                  borderRadius: '999px',
                   boxShadow: 'var(--mui-customShadows-xs)'
                 }
               }}
