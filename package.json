@@ -10,6 +10,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "build:icons": "tsx src/assets/iconify-icons/bundle-icons-css.js",
     "postinstall": "npm run build:icons",
     "removeI18n": "tsx src/remove-translation-scripts/index.js"
   },
@@ -117,5 +118,8 @@
   },
   "overrides": {
     "rimraf": "^5.0.7"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
