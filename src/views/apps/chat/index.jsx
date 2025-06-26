@@ -656,12 +656,11 @@ const ChatWrapper = () => {
                               </Typography>
                             ) : msg.time ? (
                               <Typography key={index} variant='caption'>
-                                {new Intl.DateTimeFormat('pt-BR', {
+                                {new Date(msg.time).toLocaleString('pt-BR', {
                                   hour: 'numeric',
                                   minute: 'numeric',
-                                  hour12: false,
-                                  timeZone: 'America/Sao_Paulo'
-                                }).format(new Date())}
+                                  hour12: false
+                                })}
                               </Typography>
                             ) : null)
                         )}
