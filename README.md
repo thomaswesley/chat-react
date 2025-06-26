@@ -7,7 +7,7 @@
 
 Sistema full stack com uma interface web de chat e um microsserviço backend que simula um **atendente virtual inteligente**, treinado para atuar com foco em **conversão de vendas** no atendimento automatizado de uma pizzaria fictícia.
 
-➡️ **Acesse a demonstração**: [https://charlene-pizzaria.vercel.app](https://charlene-pizzaria.vercel.app)
+➡️ **Acesse a demonstração**: [https://charlene.ia.thomaswesleysoftware.com.br](https://charlene.ia.thomaswesleysoftware.com.br)
 
 ---
 

@@ -689,7 +689,7 @@ const ChatWrapper = () => {
                 '& fieldset': { border: '0' },
                 '& .MuiOutlinedInput-root': {
                   background: 'var(--mui-palette-background-paper)',
-                  borderRadius: '999px',
+                  borderRadius: '999px !important',
                   boxShadow: 'var(--mui-customShadows-xs)'
                 }
               }}
