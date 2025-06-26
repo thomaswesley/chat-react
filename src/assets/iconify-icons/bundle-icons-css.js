@@ -41,7 +41,7 @@ const sources = {
   ],
   svg: [
     {
-      dir: join(__dirname, 'src/assets/iconify-icons/svg'),
+      dir: join(__dirname, 'svg'), // Caminho relativo corrigido
       monotone: false,
       prefix: 'custom'
     }
