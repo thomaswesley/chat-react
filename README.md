@@ -85,8 +85,8 @@ Brownie com calda de chocolate, Pudim, Sorvete de Creme, Torta de Limão, Petit 
 - Suporte a **WebSocket**.
 
 ### 💻 Frontend – [pagana-react](https://github.com/thomaswesley/pagana-react)
-- React + Vite
-- Axios + WebSocket
+- React JS
+- WebSocket
 - Interface de chat simples e funcional.
 - Mensagens do cliente e resposta em tempo real da IA.
 
@@ -117,15 +117,9 @@ npm run dev
 
 ## 📦 Tecnologias Utilizadas
 
-- **Frontend**: React, Vite, Axios, WebSocket
+- **Frontend**: React, WebSocket
 - **Backend**: Node.js, TypeScript, Express, MySQL
-- **Outros**: Dotenv, ESLint, Prettier, Cors, Socket.io
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+- **Outros**: Socket.io
 
 ---
 

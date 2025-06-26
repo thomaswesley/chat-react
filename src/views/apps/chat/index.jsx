@@ -330,6 +330,100 @@ const ChatWrapper = () => {
     }
   }
 
+  const getMessages = async () => {
+
+    try {
+
+      const data = await apiPaganaPizzaria.get('/messages').then(response => {
+
+        console.log('Resposta getMessages', response.data)
+
+        if (!response.data.error) {
+          setMessages(response.data.data)
+        }
+
+        return response.data
+
+      }).catch(error => {
+      
+        console.log(error)
+      
+      }).finally(function () {
+      
+        // always executed      
+      });
+
+      return data
+
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+
+    socket.on('message-saved', (msg) => {
+
+      console.log('Mensagem salva (websocket):', msg);
+      const index = msg.dataUser.indiceArrayNewMessage;
+
+      //setMessages((prev) => [...prev, msg.dataUser]);
+      //setMsg('')      
+
+      setMessages((prevMessages) => {
+
+        const newMessages = [...prevMessages];
+        const target = newMessages[index];
+
+        if (target) {
+          newMessages[index] = {
+            ...target,
+            msgStatus: {
+              ...target.msgStatus,
+              isDelivered: true
+            }
+          };
+        }
+
+        return newMessages;
+      });
+    });
+
+    socket.on('bot-response', (msg) => {
+
+      console.log('Resposta da IA (websocket):', msg);
+
+      setMessages((prev) => [...prev, msg.content]);
+
+      const index = msg.content.indiceArrayNewMessage;
+
+      setMessages((prevMessages) => {
+
+        const newMessages = [...prevMessages];
+        const target = newMessages[index];
+
+        if (target) {
+          newMessages[index] = {
+            ...target,
+            msgStatus: {
+              ...target.msgStatus,
+              isSeen: true
+            }
+          };
+        }
+
+        return newMessages;
+      });
+
+    });
+
+    return () => {
+      socket.off('message-saved');
+      socket.off('bot-response');
+    };
+  }, []);
+
   useEffect(() => {
     getMessages()
   }, [])
