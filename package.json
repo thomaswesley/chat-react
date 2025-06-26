@@ -10,7 +10,6 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "build:icons": "tsx src/assets/iconify-icons/bundle-icons-css.js",
     "postinstall": "npm run build:icons",
     "removeI18n": "tsx src/remove-translation-scripts/index.js"
   },
@@ -59,6 +58,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "emoji-mart": "^5.6.0",
+    "iconify": "^1.4.0",
     "input-otp": "^1.2.4",
     "keen-slider": "^6.8.6",
     "mapbox-gl": "^3.5.2",
