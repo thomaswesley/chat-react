@@ -21,11 +21,12 @@ import { getIcons, getIconsCSS, stringToIcon } from '@iconify/utils'
 const sources = {
   json: [
     // Iconify JSON file (@iconify/json is a package name, /json/ is directory where files are, then filename)
-    require.resolve('@iconify/json/json/ri.json'),
+    //require.resolve('@iconify/json/json/ri.json'),
+    await import('@iconify/json/json/ri.json').default,
 
     // Custom file with only few icons
     {
-      filename: require.resolve('@iconify/json/json/line-md.json'),
+      filename: await import('@iconify/json/json/line-md.json').default,
       icons: ['home-twotone-alt', 'github', 'document-list', 'document-code', 'image-twotone']
     }
 
@@ -83,7 +84,7 @@ const target = join(__dirname, 'generated-icons.css')
     const organizedList = organizeIconsList(sources.icons)
 
     for (const prefix in organizedList) {
-      const filename = require.resolve(`@iconify/json/json/${prefix}.json`)
+      const filename = await import('@iconify/json/json/${prefix}.json').default
 
       sourcesJSON.push({
         filename,
