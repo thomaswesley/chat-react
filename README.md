@@ -1,7 +1,7 @@
 
 # 🍕 Charlene – Agente de Atendimento com IA para Pizzaria Pagana
 
-[![Deploy Frontend](https://img.shields.io/badge/demo-online-brightgreen)](https://charlene-pizzaria.vercel.app)
+[![Deploy Frontend](https://img.shields.io/badge/demo-online-brightgreen)](https://charlene.ia.thomaswesleysoftware.com.br/en/apps/chat)
 [![Backend](https://img.shields.io/badge/api-nodejs-blue)](https://github.com/thomaswesley/pagana-api-node)
 [![Frontend](https://img.shields.io/badge/frontend-react-61DAFB)](https://github.com/thomaswesley/pagana-react)
 
