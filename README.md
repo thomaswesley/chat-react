@@ -118,7 +118,7 @@ npm run dev
 ## 📦 Tecnologias Utilizadas
 
 - **Frontend**: React, WebSocket
-- **Backend**: Node.js, TypeScript, Express, MySQL
+- **Backend**: Node.js, TypeScript, WebSocket, Express, MySQL
 - **Outros**: Socket.io
 
 ---
