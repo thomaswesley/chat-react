@@ -123,4 +123,14 @@ npm run dev
 
 ---
 
+## 📄 Variáveis de Ambiente
+
+Exemplo de `.env`:
+
+```env
+NEXT_PUBLIC_APP_PAGANA_PIZZARIA_NODE=http://localhost:8081
+```
+
+---
+
 Feito com ❤️ por [Thomas Wesley](https://github.com/thomaswesley)
