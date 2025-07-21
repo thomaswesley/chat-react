@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const apiPaganaPizzaria = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_APP_PAGANA_PIZZARIA_NODE
+const apiChat = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_APP_CHAT_NODE
 })
 
-export { apiPaganaPizzaria }
+export { apiChat }

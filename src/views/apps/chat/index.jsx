@@ -28,7 +28,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import CustomAvatar from '@core/components/mui/Avatar'
 import { useSettings } from '@core/hooks/useSettings'
 import { commonLayoutClasses } from '@layouts/utils/layoutClasses'
-import { apiPaganaPizzaria } from '@utils/api'
+import { apiChat } from '@utils/api'
 import { io } from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -142,7 +142,7 @@ const UserAvatar = ({ activeUser, setUserProfileLeftOpen, setBackdropOpen }) => 
 
 const ChatWrapper = () => {
 
-  const socket = io(process.env.NEXT_PUBLIC_APP_PAGANA_PIZZARIA_NODE);
+  const socket = io(process.env.NEXT_PUBLIC_APP_CHAT_NODE);
   const [messages, setMessages] = useState([])
 
   const [backdropOpen, setBackdropOpen] = useState(false)
@@ -179,7 +179,7 @@ const ChatWrapper = () => {
         {
             "id": 3,
             "fullName": "Charlene",
-            "role": "Pagana Pizzaria",
+            "role": "Gordice Pizzaria",
             "avatarColor": "primary",
             "about": "",
             "status": "busy",
@@ -197,7 +197,7 @@ const ChatWrapper = () => {
     "activeUser": {
         "id": 3,
         "fullName": "Charlene",
-        "role": "Pagana Pizzaria",
+        "role": "Gordice Pizzaria",
         "avatarColor": "primary",
         "about": "",
         "status": "busy",
@@ -299,7 +299,7 @@ const ChatWrapper = () => {
   async function postMessages(dados) {
 
     try {
-      const data = await apiPaganaPizzaria.post('/messages', dados, {
+      const data = await apiChat.post('/messages', dados, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -334,7 +334,7 @@ const ChatWrapper = () => {
 
     try {
 
-      const data = await apiPaganaPizzaria.get('/messages').then(response => {
+      const data = await apiChat.get('/messages').then(response => {
 
         console.log('Resposta getMessages', response.data)
 

@@ -110,7 +110,7 @@ const UserDropdown = () => {
                           </Typography>
 
                           <Button
-                            onClick={e => handleDropdownClose(e, '/entrar')}
+                            //onClick={e => handleDropdownClose(e, '/entrar')}
                             fullWidth 
                             size="small"
                             variant="contained"
