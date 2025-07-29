@@ -8,9 +8,6 @@ Interface web do atendimento automatizado da **Charlene**, a atendente virtual d
 
 - **React JS**
 - **WebSocket** (Socket.io)
-- **Vite**
-- **Axios** (para chamadas REST)
-- **CSS** leve e funcional para interface de chat
 
 ---
 
@@ -18,7 +15,7 @@ Interface web do atendimento automatizado da **Charlene**, a atendente virtual d
 
 - Interface de chat em tempo real
 - Integração com IA via WebSocket e API REST
-- Histórico de conversa exibido com diferenciação de remetente
+- Exibição do histórico de conversa
 - Respostas automáticas com linguagem simpática e contextual
 
 ---
@@ -33,7 +30,7 @@ O front-end se conecta com o back-end da Charlene através de:
 - **API REST** para recuperação do histórico
   - `GET /messages`: obtém todas as mensagens já trocadas
 
-> O back-end é implementado em Node.js + Express e pode ser acessado em: [https://github.com/thomaswesley/chat-api-node](https://github.com/thomaswesley/chat-api-node)
+> O back-end é implementado em Node + Express e pode ser acessado em: [https://github.com/thomaswesley/chat-api-node](https://github.com/thomaswesley/chat-api-node)
 
 ---
 
@@ -72,19 +69,7 @@ Exemplo de `.env`:
 NEXT_PUBLIC_APP_CHAT_NODE=http://localhost:3001
 ```
 
-> Certifique-se de que o back-end esteja rodando localmente na mesma porta especificada acima.
-
----
-
-## 🖼️ Interface
-
-A interface possui:
-
-- Layout simples e responsivo
-- Caixa de entrada de mensagem
-- Mensagens do usuário alinhadas à direita
-- Mensagens da IA alinhadas à esquerda
-- Scroll automático ao final da conversa
+> Certifique-se de que o back-end esteja rodando localmente.
 
 ---
 
